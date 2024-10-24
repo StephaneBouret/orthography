@@ -1,3 +1,115 @@
+@font-face {
+    font-family: AirbnbCereal;
+    font-weight: normal;
+    font-style: normal;
+    src: url(../fonts/AirbnbCereal_W_Lt.otf);
+    font-display: swap;
+}
+
 body {
     background-color: skyblue;
+    font-family: AirbnbCereal, Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
 }
+
+/*--------------------------------------------------------------
+# Navbar
+--------------------------------------------------------------*/
+.navbar {
+    align-items: center !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    padding-bottom: .5rem !important;
+    padding-top: .5rem !important;
+    position: relative !important;
+}
+
+.container-fluid {
+    max-width: 1440px;
+}
+
+.container-fluid {
+    padding-right: 20px !important;
+    padding-left: 20px !important;
+}
+
+@media (min-width: 576px) {
+    .container-fluid {
+        padding-right: 32px !important;
+        padding-left: 32px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .container-fluid {
+        padding-right: 48px !important;
+        padding-left: 48px !important;
+    }
+}
+
+/*--------------------------------------------------------------
+# Homepage
+--------------------------------------------------------------*/
+.services,
+.show-program {
+    position: relative;
+    background-color: rgb(255, 255, 255);
+}
+
+.container-programs {
+    position: relative;
+    margin: 0px auto;
+    z-index: 1;
+    padding: 40px 20px;
+    width: auto;
+    font-size: 18px;
+}
+
+@media (min-width: 768px) {
+    .container-programs {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container-programs {
+        width: 970px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-programs {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+.section-title {
+    text-align: center;
+    padding-bottom: 50px;
+  }
+  
+  .section-title h1 {
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    padding: 8px 20px;
+    margin: 0;
+    background: #f5f9fc;
+    color: #428bca;
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 50px;
+  }
+  
+  .section-title h2 {
+    margin: 15px 0 0 0;
+    font-size: 32px;
+    font-weight: 500;
+  }
+  
+  .section-title h2 span {
+    color: #428bca;
+  }

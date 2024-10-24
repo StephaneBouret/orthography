@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">E-learning</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarColor03">
+			<ul class="navbar-nav me-auto">
+				{% if app.user %}
+					<li class="nav-item">
+						<a href="#" class="nav-link">
+							📚 Programmes
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link">
+							💌 Newsletter
+						</a>
+					</li>
+				{% endif %}
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						📣 Contact
+					</a>
+				</li>
+			</ul>
+			<ul
+				class="navbar-nav">
+				{# <li class="nav-item">
+													<a href="{{ path('cart_show') }}" class="nav-link">
+														<i class="fas fa-shopping-cart"></i>
+														Panier ({{ cartService.total | amount }})
+													</a>
+												</li> #}
+				{% if app.user %}
+					{# <li class="nav-item">
+																<a href="{{ path('purchase_index') }}" class="nav-link">Mes commandes</a>
+															</li> #}
+					{% if is_granted('ROLE_ADMIN') %}
+						<li class="nav-item">
+							<a href="#" class="nav-link">Administration</a>
+						</li>
+					{% endif %}
+					{# <div class="btn-group">
+						<button class="dropdown-toggle btn-dropdown-user" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+							<div class="sc-gravatar">
+								{% if app.user.avatar.imageName is defined and app.user.avatar.imageName != null %}
+									<img src="{{ vich_uploader_asset(app.user.avatar, 'imageFile') }}" class="sc-img-gravatar">
+								{% else %}
+									<img src="{{ gravatar('sbouret@discommentondit.fr') }}" class="sc-img-gravatar"/>
+								{% endif %}
+							</div>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-lg-end py-0">
+							<li class="py-2 px-2">
+								<a class="dropdown-item dropdown-user" href="{{path('profile_edit')}}">Paramètres</a>
+							</li>
+							<div class="space-between"></div>
+							<li class="py-2 px-2">
+								<a class="dropdown-item dropdown-user color-btn-logout" href="{{ path('security_logout') }}">Se déconnecter</a>
+							</li>
+						</ul>
+					</div> #}
+				{% else %}
+					<li class="nav-item">
+						<a href="#" class="btn btn-primary">Se connecter</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>
