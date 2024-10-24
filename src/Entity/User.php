@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use libphonenumber\PhoneNumber;
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,6 +49,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
+
+    #[ORM\Column(type: 'phone_number')]
+    #[AssertPhoneNumber(defaultRegion: 'FR')]
+    private ?PhoneNumber $phone = null;
 
     public function getId(): ?int
     {
@@ -179,6 +185,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCity(string $city): static
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPhone(): ?PhoneNumber
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?PhoneNumber $phone): static
+    {
+        $this->phone = $phone;
 
         return $this;
     }
