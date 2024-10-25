@@ -20,5 +20,9 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    auth_mailer:
+        # class: Scheb\TwoFactorBundle\Mailer\SymfonyAuthCodeMailer
+        class: App\Service\SendEmail2faService
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
