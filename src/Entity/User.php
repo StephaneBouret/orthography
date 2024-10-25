@@ -54,6 +54,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[AssertPhoneNumber(defaultRegion: 'FR')]
     private ?PhoneNumber $phone = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resetToken = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdTokenAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -197,6 +203,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhone(?PhoneNumber $phone): static
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): static
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    public function getCreatedTokenAt(): ?\DateTimeImmutable
+    {
+        return $this->createdTokenAt;
+    }
+
+    public function setCreatedTokenAt(?\DateTimeImmutable $createdTokenAt): static
+    {
+        $this->createdTokenAt = $createdTokenAt;
 
         return $this;
     }

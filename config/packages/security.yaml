@@ -16,6 +16,24 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            custom_authenticator: App\Security\LoginFormAuthenticator
+            logout:
+                path: security_logout
+                # where to redirect after logout
+                # target: app_any_route
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                token_provider:
+                    doctrine: true
+                path: /
+                # by default, the feature is enabled by checking a checkbox in the
+                # login form, uncomment the following line to always enable it.
+                #always_remember_me: true
+            # configure the maximum login attempts
+            login_throttling:
+                max_attempts: 3          # per minute ...
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
