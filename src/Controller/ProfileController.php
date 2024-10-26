@@ -9,6 +9,7 @@ use App\Service\AvatarService;
 use App\Form\UpdateUserFormType;
 use App\Form\ChangeEmailFormType;
 use App\Repository\UserRepository;
+use App\Form\UpdatePasswordUserFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -100,6 +101,39 @@ class ProfileController extends AbstractController
             'user' => $user
         ]);
     }
+
+    #[Route('/profile/editPassword', name: 'profile_editPassword')]
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour accéder à cette page')]
+    public function editPassword(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+    
+        $form = $this->createForm(UpdatePasswordUserFormType::class, $user);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $newPassword = $form->get('newPassword')->getData();
+                $password = $userPasswordHasher->hashPassword($user, $newPassword);
+    
+                $user->setPassword($password);
+                $em->flush();
+    
+                $this->addFlash('success', 'Votre mot de passe a bien été mis à jour');
+                return $this->redirectToRoute('homepage');
+            } else {
+                // En cas d'erreurs de validation, rediriger vers la même page
+                return $this->redirectToRoute('profile_editPassword');
+            }
+        }
+    
+        return $this->render('profile/credentials.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
+    }
+    
 
     #[Route('profile/user/{id}/delete', name: 'profile_delete')]
     public function delete(Request $request, User $user, UserRepository $userRepository)
