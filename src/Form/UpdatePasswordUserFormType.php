@@ -17,6 +17,9 @@ class UpdatePasswordUserFormType extends AbstractType
     {
         $builder
             ->add('oldPassword', PasswordType::class, [
+                'toggle' => true,
+                'hidden_label' => 'Masquer',
+                'visible_label' => 'Afficher',
                 'label' => 'Mot de passe actuel',
                 'label_attr' => [
                     'class' => 'lh-label fw-medium form-label'
@@ -25,7 +28,7 @@ class UpdatePasswordUserFormType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Mot de passe actuel',
-                    'class' => 'prepend-input form-control'
+                    'class' => 'form-control'
                 ],
                 'constraints' => [
                     new UserPassword([
@@ -49,23 +52,29 @@ class UpdatePasswordUserFormType extends AbstractType
                 //     ])
                 // ],
                 'first_options' => [
+                    'toggle' => true,
+                    'hidden_label' => 'Masquer',
+                    'visible_label' => 'Afficher',
                     'label' => 'Nouveau mot de passe',
                     'label_attr' => [
                         'class' => 'lh-label fw-medium form-label'
                     ],
                     'attr' => [
                         'placeholder' => 'Entrez votre nouveau mot de passe',
-                        'class' => 'prepend-input form-control'
+                        'class' => 'form-control'
                     ]
                 ],
                 'second_options' => [
+                    'toggle' => true,
+                    'hidden_label' => 'Masquer',
+                    'visible_label' => 'Afficher',
                     'label' => 'Confirmer le nouveau mot de passe',
                     'label_attr' => [
                         'class' => 'lh-label fw-medium form-label'
                     ],
                     'attr' => [
                         'placeholder' => 'Confirmer le nouveau mot de passe',
-                        'class' => 'prepend-input form-control'
+                        'class' => 'form-control'
                     ]
                 ]
             ]);
