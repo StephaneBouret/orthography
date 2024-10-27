@@ -11,7 +11,6 @@ class AvatarService
 {
     protected $em;
     protected $params;
-
     public function __construct(EntityManagerInterface $em, ParameterBagInterface $params)
     {
         $this->em = $em;
@@ -30,7 +29,6 @@ class AvatarService
         $avatar->setUpdatedAt(new \DateTimeImmutable());
         $this->em->persist($avatar);
         $this->em->flush();
-
         return $avatar;
     }
 
@@ -48,12 +46,9 @@ class AvatarService
                 $avatar->setUpdatedAt(new \DateTimeImmutable());
                 $this->em->persist($avatar);
             }
-
             $this->em->flush();
-
             return true;
         }
-
         return false;
     }
 }

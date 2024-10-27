@@ -28,7 +28,7 @@
 				{% if app.user %}
 					{% if is_granted('ROLE_ADMIN') %}
 						<li class="nav-item">
-							<a href="#" class="nav-link">Administration</a>
+							<a href="{{ path('admin') }}" class="nav-link">Administration</a>
 						</li>
 					{% endif %}
 					<div class="btn-group">

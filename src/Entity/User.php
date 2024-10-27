@@ -39,6 +39,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column]
     private ?string $password = null;
 
+    private ?string $plainPassword = null;
+
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
 
@@ -66,6 +68,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Avatar $avatar = null;
+
+    public function __toString()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
 
     public function getId(): ?int
     {
@@ -133,6 +140,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         return $this;
     }
 
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -164,6 +183,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         $this->lastname = $lastname;
 
         return $this;
+    }
+
+    /**
+     * Retourne le nom complet de l'utilisateur
+     *
+     * @return string
+     */
+    public function getFullname(): string
+    {
+        return "{$this->firstname} {$this->lastname}";
     }
 
     public function getAdress(): ?string

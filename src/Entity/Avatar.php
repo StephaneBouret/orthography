@@ -16,7 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AvatarRepository::class)]
-#[ORM\HasLifecycleCallbacks]
+#[HasLifecycleCallbacks]
 #[Vich\Uploadable]
 class Avatar
 {
@@ -56,18 +56,18 @@ class Avatar
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    private bool $isDefaultAvatar = false;
+    // private bool $isDefaultAvatar = false;
 
     public function __construct(?User $user = null)
     {
         $this->user = $user;
-        if ($user) {
-            $initial = strtoupper($user->getFirstname()[0]);
-            $defaultAvatarPath = sys_get_temp_dir() . '/' . uniqid() . '.png';
-            $this->createDefaultAvatar($initial, $defaultAvatarPath);
-            $this->imageName = basename($defaultAvatarPath);
-            $this->isDefaultAvatar = true;
-        }
+        // if ($user && !$this->imageName) {
+        //     $initial = strtoupper($user->getFirstname()[0]);
+        //     $defaultAvatarPath = sys_get_temp_dir() . '/' . uniqid() . '.png';
+        //     $this->createDefaultAvatar($initial, $defaultAvatarPath);
+        //     $this->imageName = basename($defaultAvatarPath);
+        //     $this->isDefaultAvatar = true;
+        // }
     }
 
     public function __toString()
@@ -127,8 +127,8 @@ class Avatar
         return $this->imageName;
     }
 
-    #[ORM\PrePersist]
-    #[ORM\PostUpdate]
+    #[PostPersist]
+    #[PostUpdate]
     public function resize()
     {
         if (null === $this->imageFile) {
@@ -181,10 +181,10 @@ class Avatar
         $image->save($outputPath);
     }
 
-    public function isDefaultAvatar(): bool
-    {
-        return $this->isDefaultAvatar;
-    }
+    // public function isDefaultAvatar(): bool
+    // {
+    //     return $this->isDefaultAvatar;
+    // }
 
     // Méthodes de sérialisation pour PHP 7.4+ et compatibilité avec PHP 8
     public function __serialize(): array
