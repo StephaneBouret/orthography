@@ -30,9 +30,12 @@ class ResetPasswordFormType extends AbstractType
                     ])
                 ],
                 'first_options' => [
+                    'toggle' => true,
+                    'hidden_label' => 'Masquer',
+                    'visible_label' => 'Afficher',
                     'label' => 'Votre mot de passe :',
                     'label_attr' => [
-                        'class' => 'lh-label fw-bold'
+                        'class' => 'lh-label fw-bold form-label'
                     ],
                     'row_attr' => [
                         'class' => 'mb-3' // Ajout de la classe mb-3
@@ -43,9 +46,12 @@ class ResetPasswordFormType extends AbstractType
                     ]
                 ],
                 'second_options' => [
+                    'toggle' => true,
+                    'hidden_label' => 'Masquer',
+                    'visible_label' => 'Afficher',
                     'label' => 'Confirmez votre mot de passe :',
                     'label_attr' => [
-                        'class' => 'lh-label fw-bold'
+                        'class' => 'lh-label fw-bold form-label'
                     ],
                     'row_attr' => [
                         'class' => 'mb-3' // Ajout de la classe mb-3
