@@ -499,14 +499,14 @@ form:invalid button.btn-dark[type=submit],
 }
 
 .email_change {
-    background: #1977cc;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
+    background: #1977cc !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: #fff !important;
     cursor: pointer;
-    font-size: .9rem;
-    margin: 24px 0 12px;
-    padding: 16px;
+    font-size: .9rem !important;
+    margin: 24px 0 12px !important;
+    padding: 16px !important;
     width: 100%;
     text-transform: uppercase;
 }
