@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\InvitationRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\InvitationRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: InvitationRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Cette adresse e-mail a déjà été enregistrée pour une invitation.')]
 class Invitation
 {
     #[ORM\Id]
@@ -22,6 +24,9 @@ class Invitation
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\Column]
+    private bool $isSent = false;
 
     public function getId(): ?int
     {
@@ -60,6 +65,18 @@ class Invitation
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isSent(): bool
+    {
+        return $this->isSent;
+    }
+
+    public function setSent(bool $isSent): static
+    {
+        $this->isSent = $isSent;
 
         return $this;
     }
