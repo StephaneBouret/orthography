@@ -6,7 +6,6 @@ use App\Entity\User;
 use libphonenumber\PhoneNumberFormat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
@@ -16,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class RegistrationFormType extends AbstractType
 {
@@ -31,7 +31,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Merci de saisir votre adresse email'
                 ],
-                'constraints' => new Email()
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -66,6 +65,10 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                    new PasswordStrength(
+                        minScore: PasswordStrength::STRENGTH_STRONG,
+                        message: 'Le mot de passe est trop faible. Veuillez utiliser un mot de passe plus fort.'
+                    )
                 ],
             ])
             ->add('firstname', TextType::class, [
@@ -94,9 +97,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Merci de saisir votre adresse'
                 ],
-                'constraints' => new NotBlank([
-                    'message' => 'Merci d\'indiquer votre adresse',
-                ])
             ])
             ->add('postalCode', TextType::class, [
                 'label' => 'Votre code postal :',
@@ -106,9 +106,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Merci de saisir votre code postal'
                 ],
-                'constraints' => new NotBlank([
-                    'message' => 'Merci d\'indiquer votre code postal',
-                ])
             ])
             ->add('city', TextType::class, [
                 'label' => 'Votre ville :',
@@ -118,9 +115,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Merci de saisir votre ville'
                 ],
-                'constraints' => new NotBlank([
-                    'message' => 'Merci d\'indiquer votre ville',
-                ])
             ])
             ->add('phone', PhoneNumberType::class, [
                 'default_region' => 'FR',

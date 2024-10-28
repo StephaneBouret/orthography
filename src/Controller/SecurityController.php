@@ -85,7 +85,7 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/reset_password_request.html.twig', [
-            'formView' => $form->createView(),
+            'formView' => $form,
         ]);
     }
 
@@ -123,7 +123,7 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/reset_password.html.twig', [
-            'passForm' => $form->createView()
+            'passForm' => $form
         ]);
 
         // Si le token est invalide on redirige vers le login

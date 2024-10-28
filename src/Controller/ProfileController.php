@@ -95,9 +95,9 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('profile/edit.html.twig', [
-            'formView' => $form->createView(),
-            'form2' => $form2->createView(),
-            'formAvatar' => $avatarForm->createView(),
+            'formView' => $form,
+            'form2' => $form2,
+            'formAvatar' => $avatarForm,
             'user' => $user
         ]);
     }
@@ -129,7 +129,7 @@ class ProfileController extends AbstractController
         }
     
         return $this->render('profile/credentials.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'user' => $user
         ]);
     }
