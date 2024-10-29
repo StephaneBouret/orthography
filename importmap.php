@@ -20,6 +20,18 @@ return [
         'path' => './assets/js/deleteAccount.js',
         'entrypoint' => true,
     ],
+    'register' => [
+        'path' => './assets/js/register.js',
+        'entrypoint' => true,
+    ],
+    'resetpw' => [
+        'path' => './assets/js/resetpw.js',
+        'entrypoint' => true,
+    ],
+    'updatepw' => [
+        'path' => './assets/js/updatepw.js',
+        'entrypoint' => true,
+    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],

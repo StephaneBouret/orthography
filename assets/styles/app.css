@@ -195,11 +195,11 @@ body {
 # Login page
 --------------------------------------------------------------*/
 .card-fill {
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid #d5d7d9;
-    border-radius: 0.5rem;
-    flex: 1 1 auto;
+    background-color: #fff !important;
+    background-clip: border-box !important;
+    border: 1px solid #d5d7d9 !important;
+    border-radius: 0.5rem !important;
+    flex: 1 1 auto !important;
 }
 
 .card-fill .card-body {
@@ -749,4 +749,32 @@ form:invalid button.btn-dark[type=submit],
 
 .toggle-password-button {
     top: -1.6rem !important;
+}
+
+/*--------------------------------------------------------------
+# Registration page
+--------------------------------------------------------------*/
+.text-very-weak {
+    color: #842029;
+    font-weight: 600;
+}
+
+.text-weak {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.text-medium {
+    color: #fd7e14;
+    font-weight: 600;
+}
+
+.text-strong {
+    color: #20c997;
+    font-weight: 600;
+}
+
+.text-very-strong {
+    color: #198754;
+    font-weight: 600;
 }

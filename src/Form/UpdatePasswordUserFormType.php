@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class UpdatePasswordUserFormType extends AbstractType
@@ -45,12 +46,12 @@ class UpdatePasswordUserFormType extends AbstractType
                     'autocomplete' => 'new-password',
                     'placeholder' => 'Merci de saisir votre mot de passe'
                 ],
-                // 'constraints' => [
-                //     new Regex([
-                //         'pattern' => '/^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ý])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ý0-9]).{12,}$/',
-                //         'message' => 'Pour des raisons de sécurité, votre mot de passe doit contenir au minimum 12 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spécial.'
-                //     ])
-                // ],
+                'constraints' => [
+                    new PasswordStrength(
+                        minScore: PasswordStrength::STRENGTH_STRONG,
+                        message: 'Le mot de passe est trop faible. Veuillez utiliser un mot de passe plus fort.'
+                    )
+                ],
                 'first_options' => [
                     'toggle' => true,
                     'hidden_label' => 'Masquer',
