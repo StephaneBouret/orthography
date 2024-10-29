@@ -95,7 +95,7 @@ class RegistrationFormType extends AbstractType
                     'class' => 'lh-label fw-medium'
                 ],
                 'attr' => [
-                    'placeholder' => 'Merci de saisir votre adresse'
+                    'placeholder' => 'Merci de saisir votre adresse',
                 ],
             ])
             ->add('postalCode', TextType::class, [

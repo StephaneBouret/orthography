@@ -8,6 +8,13 @@ let phone = false;
 let rgpd = false;
 let pass = false;
 
+document.querySelector("#registration_form_postalCode").value = "75001"; // Exemple de code postal valide
+document.querySelector("#registration_form_city").value = "Paris"; // Exemple de ville valide
+
+// Forcer la vérification après définition
+checkPostalCode.call(document.querySelector("#registration_form_postalCode"));
+checkCity.call(document.querySelector("#registration_form_city"));
+
 document.querySelector("#registration_form_firstname").addEventListener("input", checkFirstname);
 document.querySelector("#registration_form_lastname").addEventListener("input", checkLastname);
 document.querySelector("#registration_form_email").addEventListener("input", checkEmail);
@@ -17,6 +24,30 @@ document.querySelector("#registration_form_phone").addEventListener("input", che
 document.querySelector("#registration_form_city").addEventListener("input", checkCity);
 document.querySelector("#registration_form_agreeTerms").addEventListener("input", checkRgpd);
 document.querySelector("#registration_form_plainPassword").addEventListener("input", checkPass);
+
+const observer = new MutationObserver(() => {
+    const postalCodeElement = document.querySelector("#registration_form_postalCode");
+    const cityElement = document.querySelector("#registration_form_city");
+
+    // Ajoute l'écouteur d'événement pour postalCode
+    if (postalCodeElement && !postalCodeElement.hasAttribute('data-listening')) {
+        postalCodeElement.addEventListener("input", checkPostalCode);
+        postalCodeElement.setAttribute('data-listening', 'true'); // Évite les doublons
+    }
+
+    // Ajoute l'écouteur d'événement pour city
+    if (cityElement && !cityElement.hasAttribute('data-listening')) {
+        cityElement.addEventListener("input", checkCity);
+        cityElement.setAttribute('data-listening', 'true'); // Évite les doublons
+    }
+
+    // Force la vérification des valeurs
+    if (postalCodeElement) checkPostalCode.call(postalCodeElement);
+    if (cityElement) checkCity.call(cityElement);
+});
+
+// Lance l'observation des mutations
+observer.observe(document.body, { childList: true, subtree: true });
 
 const emailInput = document.querySelector("#registration_form_email");
 function checkValueEmail(){
@@ -49,15 +80,17 @@ function checkEmail(){
     checkAll();
 }
 
-function checkCity(){
-    const cityRegex = /^\s*[a-zA-Z]{1}[0-9a-zA-Z][0-9a-zA-Z '-.=#/]*$/gmi;
-    city = cityRegex.test(this.value);
+function checkPostalCode() {
+    const postalCodeValue = this.value; // Obtenez la valeur actuelle
+    const postalCodeRegex = /^((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B)) *([0-9]{3})?$/i;
+    postalCode = postalCodeRegex.test(postalCodeValue);
     checkAll();
 }
 
-function checkPostalCode(){
-    const postalCodeRegex = /^((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B)) *([0-9]{3})?$/i;
-    postalCode = postalCodeRegex.test(this.value);
+function checkCity() {
+    const cityValue = this.value; // Obtenez la valeur actuelle
+    const cityRegex = /^\s*[a-zA-Z]{1}[0-9a-zA-Z][0-9a-zA-Z '-.=#/]*$/gmi;
+    city = cityRegex.test(cityValue);
     checkAll();
 }
 

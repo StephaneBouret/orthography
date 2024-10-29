@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Google\GoogleService;
 use App\Repository\InvitationRepository;
 use App\Security\LoginFormAuthenticator;
 use App\Service\AvatarService;
@@ -18,7 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class InvitationController extends AbstractController
 {
     #[Route('/invitation/{uuid}', name: 'app_invitation', requirements: ['uuid' => '[\w-]+'])]
-    public function index($uuid, InvitationRepository $invitationRepository, Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, AvatarService $avatarService): Response
+    public function index($uuid, InvitationRepository $invitationRepository, Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, AvatarService $avatarService, GoogleService $googleService): Response
     {
         $invitation = $invitationRepository->findOneBy([
             'uuid' => $uuid
@@ -57,7 +58,8 @@ class InvitationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
-            'invitation' => $invitation
+            'invitation' => $invitation,
+            'google_api_key' => $googleService->getGoogleKey(),
         ]);
     }
 }

@@ -32,6 +32,10 @@ return [
         'path' => './assets/js/updatepw.js',
         'entrypoint' => true,
     ],
+    'location' => [
+        'path' => './assets/js/location.js',
+        'entrypoint' => true,
+    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],

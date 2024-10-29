@@ -21,6 +21,10 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Google\GoogleService:
+        arguments:
+            $googleKey: "%env(GOOGLE_API_KEY)%"
+
     auth_mailer:
         # class: Scheb\TwoFactorBundle\Mailer\SymfonyAuthCodeMailer
         class: App\Service\SendEmail2faService
