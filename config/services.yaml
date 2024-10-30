@@ -25,6 +25,10 @@ services:
         arguments:
             $googleKey: "%env(GOOGLE_API_KEY)%"
 
+    App\Service\SendMailService:
+        arguments:
+            $defaultFrom: "%env(MAILER_DEFAULT_FROM)%"
+
     auth_mailer:
         # class: Scheb\TwoFactorBundle\Mailer\SymfonyAuthCodeMailer
         class: App\Service\SendEmail2faService

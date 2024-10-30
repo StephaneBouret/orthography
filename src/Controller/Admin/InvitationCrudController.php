@@ -78,7 +78,7 @@ class InvitationCrudController extends AbstractCrudController
         foreach ($invitations as $invitation) {
             // Envoyer l'email
             $this->mailer->sendEmail(
-                'no-reply@monsite.net',
+                null,
                 'Invitation de l\'application e-learning',
                 $invitation->getEmail(),
                 'Invitation pour vous enregistrer sur le site e-learning',

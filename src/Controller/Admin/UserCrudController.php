@@ -44,7 +44,8 @@ class UserCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         $actions = parent::configureActions($actions);
-        $actions->remove(Crud::PAGE_INDEX, Action::NEW);
+        $actions->disable(Action::NEW)
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
         return $actions;
     }
 

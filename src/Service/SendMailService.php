@@ -10,14 +10,16 @@ class SendMailService
 {
     protected $mailer;
     protected $security;
+    protected $defaultFrom;
 
-    public function __construct(MailerInterface $mailer)
+    public function __construct(MailerInterface $mailer, string $defaultFrom)
     {
         $this->mailer = $mailer;
+        $this->defaultFrom = $defaultFrom;
     }
 
     public function sendEmail(
-        string $from,
+        string $from = null,
         string $name,
         string $to,
         string $subject,
@@ -25,7 +27,7 @@ class SendMailService
         array $context
     ) {
         $email = new TemplatedEmail();
-        $email->from(new Address($from, $name))
+        $email->from(new Address($from ?? $this->defaultFrom, $name))
             ->to($to)
             ->htmlTemplate("emails/$template.html.twig")
             ->context($context)

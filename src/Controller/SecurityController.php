@@ -68,7 +68,7 @@ class SecurityController extends AbstractController
                 ];
                 // Envoi du mail
                 $mail->sendEmail(
-                    'no-reply@monsite.net',
+                    null,
                     'Infos de l\'application elearning',
                     $user->getEmail(),
                     'Réinitialisation de mot de passe',
