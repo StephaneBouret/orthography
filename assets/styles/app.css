@@ -11,6 +11,10 @@ body {
     font-family: AirbnbCereal, Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
 }
 
+.jyoYKi {
+    min-height: 570px;
+}
+
 /*--------------------------------------------------------------
 # Navbar
 --------------------------------------------------------------*/
@@ -1288,4 +1292,176 @@ form:invalid button.btn-dark[type=submit],
 .back-to-top.active {
     visibility: visible;
     opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# footer && legal notice
+--------------------------------------------------------------*/
+.footer,
+.legal {
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+}
+
+.legal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    -moz-column-gap: 12px;
+    column-gap: 12px;
+    margin-top: 20px;
+}
+
+.legal-footer-rgpd {
+    padding-left: 24px;
+    margin: 0px;
+    -webkit-padding-start: 0px;
+    padding-inline-start: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+}
+
+.link-to-legal {
+    text-decoration: none;
+    font-size: 14.4px;
+    letter-spacing: 0em;
+    line-height: 1.75;
+    text-transform: none;
+    color: rgba(13, 22, 27, 0.4);
+    font-weight: 400 !important;
+}
+
+.link-to-legal:hover {
+    text-decoration: underline;
+}
+
+.copy-footer {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-top: 48px;
+}
+
+.logo__mark {
+    align-items: center;
+    display: inline-flex;
+    margin-right: 5px;
+}
+
+.logo__mark .greater-icon {
+    height: 100%;
+    width: 0.95rem;
+}
+
+.logo__text {
+    font-family: sans-serif;
+    font-size: 14px;
+    letter-spacing: unset;
+    color: rgb(110, 116, 119);
+    font-weight: 400 !important;
+}
+
+.logo__cursor {
+    -webkit-animation: cursor 1s infinite;
+    animation: cursor 1s infinite;
+    background: rgb(52, 96, 206);
+    border-radius: 1px;
+    display: inline-block;
+    height: 1rem;
+    margin-left: 5px;
+    width: 10px;
+}
+
+.vertical-bar {
+    width: 1px;
+    height: 16px;
+    background: rgb(213, 215, 217);
+    margin: 0px 12px;
+}
+
+.content-legal {
+    font-size: 18px;
+    letter-spacing: 0em;
+    line-height: 1.75;
+    text-transform: none;
+    font-weight: 500 !important;
+    margin-top: 12px;
+    color: rgb(13, 22, 27);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    white-space: initial;
+}
+
+.content-legal a {
+    color: rgb(13, 22, 27);
+    text-decoration: underline;
+}
+
+.content-legal a:hover {
+    opacity: 0.75;
+}
+
+.container-footer-second {
+    position: relative;
+    margin: 0px auto;
+    z-index: 1;
+    padding: 40px 20px;
+    max-width: 1440px;
+    width: 100%;
+    font-size: 18px;
+}
+
+@media (min-width: 768px) {
+    .container-footer-second {
+        width: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .container-footer-second {
+        width: auto;
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-footer-second {
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+}
+
+@-webkit-keyframes cursor {
+    0% {
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    to {
+        opacity: 0
+    }
+}
+
+@keyframes cursor {
+    0% {
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    to {
+        opacity: 0
+    }
 }
