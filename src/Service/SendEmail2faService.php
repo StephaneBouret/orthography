@@ -27,7 +27,7 @@ class SendEmail2faService implements AuthCodeMailerInterface
         /** @var User */
         $user = $this->security->getUser();
         $this->email->sendEmail(
-            'no-reply@monsite.net',
+            null,
             'Code de vérification : application elearning',
             $user->getEmail(),
             'Code de vérification',

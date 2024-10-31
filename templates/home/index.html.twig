@@ -1,17 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil
+{% endblock %}
 
 {% block body %}
 	<section id="services" class="services">
 		<div class="container-programs">
 			<div class="section-title">
 				<h1>Programmes</h1>
-				<h2>Essayez mes
+				<h2>Essayez nos
 					<span>Programmes</span>
 				</h2>
 			</div>
-
+			<div class="content-programs">
+				{% for p in programs %}
+					{% include "partials/_program_card.html.twig" %}
+				{% endfor %}
+			</div>
 		</div>
 	</section>
 {% endblock %}
