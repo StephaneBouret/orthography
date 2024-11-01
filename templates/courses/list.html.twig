@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les programmes
+{% endblock %}
+
+{% block body %}
+	<div class="container pt-5">
+		<section class="section-programs jyoYKi">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="card">
+						<div class="card-body pt-3">
+							<div class="w-100">
+								<div class="d-md-flex justify-content-md-between align-items-center spacer-section">
+									<div class="flex-fill mb-6 mb-md-0">
+										<h1 class="pr-md-6 ">Programmes</h1>
+									</div>
+								</div>
+								<ul class="nav nav-tabs nav-tabs-bordered">
+									<li class="nav-item">
+										<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#my-programs">Mes Programmes</button>
+									</li>
+									<li class="nav-item">
+										<button class="nav-link" data-bs-toggle="tab" data-bs-target="#next-programs">Les autres programmes</button>
+									</li>
+								</ul>
+								<div class="tab-content pt-2 mt-2">
+									<div class="tab-pane fade profile-overview active show" id="my-programs">
+										{% for prg in programs %}
+											{% if app.request.cookies.get('url_visited') %}
+												{% set url = app.request.cookies.get('url_visited') %}
+											{% else %}
+												{% set url = app.request.schemeAndHttpHost ~ '/courses/' %}
+											{% endif %}
+											<article class="mb-6 d-flex align-items-center">
+												<div>
+													<a class="thumb thumb-lg thumb-photo thumb-link thumb-program-orthography" href="{{ relative_path(url) }}"></a>
+												</div>
+												<div class="ml-3">
+													<header>
+														<h1 class="title">
+															<a class="text-grey-dark text-decoration-none" href="{{ relative_path(url) }}">{{ prg.name }}</a>
+														</h1>
+													</header>
+												</div>
+											</article>
+										{% endfor %}
+									</div>
+									<div class="tab-pane fade profile-edit pt-3" id="next-programs">
+										<h5 class="card-sub-title">Pas d'autres programmes à venir</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	{% include "shared/_footer_second.html.twig" %}
+{% endblock %}
