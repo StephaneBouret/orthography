@@ -65,9 +65,21 @@ class Program
     #[ORM\OneToMany(targetEntity: Courses::class, mappedBy: 'program')]
     private Collection $courses;
 
+    /**
+     * @var Collection<int, Sections>
+     */
+    #[ORM\OneToMany(targetEntity: Sections::class, mappedBy: 'program')]
+    private Collection $sections;
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
+        $this->sections = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -172,6 +184,36 @@ class Program
             // set the owning side to null (unless already changed)
             if ($course->getProgram() === $this) {
                 $course->setProgram(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sections>
+     */
+    public function getSections(): Collection
+    {
+        return $this->sections;
+    }
+
+    public function addSection(Sections $section): static
+    {
+        if (!$this->sections->contains($section)) {
+            $this->sections->add($section);
+            $section->setProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSection(Sections $section): static
+    {
+        if ($this->sections->removeElement($section)) {
+            // set the owning side to null (unless already changed)
+            if ($section->getProgram() === $this) {
+                $section->setProgram(null);
             }
         }
 

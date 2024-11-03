@@ -3,12 +3,23 @@
 namespace App\Entity;
 
 use App\Repository\CoursesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CoursesRepository::class)]
+#[Vich\Uploadable]
 class Courses
 {
+    public const TYPE_TWIG = 'Twig';
+    public const TYPE_AUDIO = 'Audio';
+    public const TYPE_QUIZ = 'Quiz';
+    public const TYPE_LINK = 'Lien';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -22,8 +33,38 @@ class Courses
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[Vich\UploadableField(mapping: 'courses_files', fileNameProperty: 'partialFileName')]
+    private ?File $partialFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $partialFileName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     #[ORM\ManyToOne(inversedBy: 'courses')]
     private ?Program $program = null;
+
+    #[ORM\ManyToOne(inversedBy: 'courses')]
+    private ?Sections $section = null;
+
+    /**
+     * @var Collection<int, Lesson>
+     */
+    #[ORM\OneToMany(targetEntity: Lesson::class, mappedBy: 'courses')]
+    private Collection $lessons;
+
+    #[ORM\Column(length: 20)]
+    #[Assert\Choice(choices: [self::TYPE_TWIG, self::TYPE_AUDIO, self::TYPE_QUIZ, self::TYPE_LINK], message: "Le type de contenu sélectionné est invalide.")]
+    private ?string $contentType = self::TYPE_TWIG;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $shortDescription = null;
+
+    public function __construct()
+    {
+        $this->lessons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,6 +103,111 @@ class Courses
     public function setProgram(?Program $program): static
     {
         $this->program = $program;
+
+        return $this;
+    }
+
+    public function getSection(): ?Sections
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Sections $section): static
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lesson>
+     */
+    public function getLessons(): Collection
+    {
+        return $this->lessons;
+    }
+
+    public function addLesson(Lesson $lesson): static
+    {
+        if (!$this->lessons->contains($lesson)) {
+            $this->lessons->add($lesson);
+            $lesson->setCourses($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesson(Lesson $lesson): static
+    {
+        if ($this->lessons->removeElement($lesson)) {
+            // set the owning side to null (unless already changed)
+            if ($lesson->getCourses() === $this) {
+                $lesson->setCourses(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $partialFile
+     */
+    public function setPartialFile(?File $partialFile = null): void
+    {
+        $this->partialFile = $partialFile;
+        if (null !== $partialFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getPartialFile(): ?File
+    {
+        return $this->partialFile;
+    }
+
+    public function setPartialFileName(?string $partialFileName): void
+    {
+        $this->partialFileName = $partialFileName;
+    }
+
+    public function getPartialFileName(): ?string
+    {
+        return $this->partialFileName;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function getContentType(): ?string
+    {
+        return $this->contentType;
+    }
+
+    public function setContentType(string $contentType): static
+    {
+        $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(?string $shortDescription): static
+    {
+        $this->shortDescription = $shortDescription;
 
         return $this;
     }

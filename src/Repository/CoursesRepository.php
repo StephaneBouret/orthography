@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Courses;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Sections;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Courses>
@@ -32,6 +33,18 @@ class CoursesRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function countNumberCoursesBySection(Sections $sections): int
+    {
+        $result = $this->createQueryBuilder('c')
+            ->select('COUNT(c)')
+            ->andWhere('c.section = :sections')
+            ->setParameter('sections', $sections)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $result;
     }
 
     public function countAll(): int
