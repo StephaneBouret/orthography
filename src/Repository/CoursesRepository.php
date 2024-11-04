@@ -57,6 +57,16 @@ class CoursesRepository extends ServiceEntityRepository
         return $result;
     }
 
+    public function countCoursesBySections(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('s.name AS section_name, COUNT(c.id) AS course_count')
+            ->join('c.section', 's')
+            ->groupBy('s.id')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Courses[] Returns an array of Courses objects
     //     */

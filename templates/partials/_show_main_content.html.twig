@@ -7,10 +7,10 @@
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item">
-									<a href="#" class="text-muted">Programmes</a>
+									<a href="{{ path('app_courses_list') }}" class="text-muted">Programmes</a>
 								</li>
 								<li class="breadcrumb-item">
-									<a href="{{ path('app_courses_list') }}" class="text-muted">Cours</a>
+									<a href="{{ path('app_sections', {'slug': course.program.slug}) }}" class="text-muted">Cours</a>
 								</li>
 								<li class="breadcrumb-item">
 									<a href="{{ path('courses_section', {'program_slug': course.program.slug, 'slug': course.section.slug}) }}" class="text-muted">Section</a>
@@ -18,7 +18,7 @@
 								<li class="breadcrumb-item active" aria-current="page">Cours</li>
 							</ol>
 						</nav>
-						<h1 class="pr-md-6 d-md-block d-none">{{ course.name }}</h1>
+						<h1 class="pr-md-6 d-md-block fw-semibold d-none">{{ course.name }}</h1>
 						{{ include('partials/_dropdown_menu_content.html.twig', {'section': course}) }}
 					</div>
 					<div class="mt-n2 mt-md-0">

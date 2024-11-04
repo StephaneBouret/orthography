@@ -6,15 +6,15 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">
-								<a href="#" class="text-muted">Programmes</a>
+								<a href="{{ path('app_courses_list') }}" class="text-muted">Programmes</a>
 							</li>
 							<li class="breadcrumb-item">
-								<a href="{{ path('app_courses_list') }}" class="text-muted">Cours</a>
+								<a href="{{ path('app_sections', {'slug': section.program.slug}) }}" class="text-muted">Cours</a>
 							</li>
 							<li class="breadcrumb-item active" aria-current="page">Section</li>
 						</ol>
 					</nav>
-					<h1 class="pr-md-6 d-md-block d-none">{{ section.name }}</h1>
+					<h1 class="pr-md-6 d-md-block fw-semibold d-none">{{ section.name }}</h1>
 					{% include "partials/_dropdown_menu_content.html.twig" %}
 				</div>
 				<div class="mt-n2 mt-md-0">
@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<div class="text-muted text-lg mt-n4 spacer-section">
-		<div>{{ section.shortDescription }}</div>
+		<div>{{ section.shortDescription|raw|nl2br }}</div>
 	</div>
 	<div class="spacer-section"></div>
 	<div class="card">

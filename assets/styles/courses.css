@@ -333,7 +333,8 @@
 }
 
 .list-group.list-group-menu .list-group-item {
-    color: rgb(6, 4, 14) !important;;
+    color: rgb(6, 4, 14) !important;
+    ;
 }
 
 .list-group.list-group-xs .list-group-item {
@@ -721,4 +722,48 @@ nav .breadcrumb .breadcrumb-item a:hover {
 
 .bg-color-transp {
     background-color: transparent !important;
+}
+
+.v9d3ks:not(:last-child) {
+    margin-bottom: 1.25rem;
+}
+
+.lk25pol {
+    color: #06040E;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.lk25pol h2 {
+    font-size: 1.125rem;
+    margin-bottom: 0;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #06040E;
+}
+
+.mt-8,
+.my-8 {
+    margin-top: 32px !important;
+}
+
+.pb7jep h3 {
+    font-size: 1rem;
+    margin-bottom: 0;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #06040E;
+}
+
+.f4lgy4 {
+    margin-left: 0.25rem;
+    margin-top: -0.625rem;
+}
+
+.svg-grey-dark {
+    fill: #06040E !important;
+}
+
+.icon.closed.f4lgy4.collapsed svg {
+    fill: #06040E !important;
 }

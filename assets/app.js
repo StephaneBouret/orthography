@@ -1,5 +1,7 @@
 import './bootstrap.js';
-import { Application } from "@hotwired/stimulus";
+import {
+    Application
+} from "@hotwired/stimulus";
 import ToastController from "./controllers/toast_controller.js";
 /*
  * Welcome to your app's main JavaScript file!
@@ -52,9 +54,10 @@ const initToggle = () => {
             const sidebarContainer = document.getElementById('fullContainer');
             const openFullscreen = document.getElementById('openFullscreen');
             const closeFullscreen = document.getElementById('closeFullscreen');
-            
+
             sidebarElement.classList.toggle("d-none");
-            sidebarContainer.classList.toggle('fullscreen', !sidebarContainer.classList.contains('fullscreen'));
+            sidebarContainer.classList.toggle('fullscreen', !sidebarContainer.classList.contains(
+                'fullscreen'));
             sidebarContainer.classList.toggle('sidebar-container');
             openFullscreen.classList.toggle('d-none');
             closeFullscreen.classList.toggle('d-none');
@@ -86,11 +89,34 @@ const closeAlertMessage = () => {
     }
 }
 
+const collapseButton = () => {
+    const collapseIcons = document.querySelectorAll('.icon[data-bs-toggle="collapse"]');
+
+    collapseIcons.forEach(icon => {
+        icon.addEventListener("click", (e) => {
+            const target = document.querySelector(icon.getAttribute("data-bs-target"));
+            const closedIcon = icon.closest("header").querySelector(".icon.closed");
+            const openedIcon = icon.closest("header").querySelector(".icon.opened");
+
+            target.addEventListener("shown.bs.collapse", () => {
+                openedIcon.classList.add("d-none");
+                closedIcon.classList.remove("d-none");
+            });
+
+            target.addEventListener("hidden.bs.collapse", () => {
+                openedIcon.classList.remove("d-none");
+                closedIcon.classList.add("d-none");
+            });
+        });
+    });
+}
+
 const initPage = () => {
     closeAlertMessage();
     backToTop();
     initToggle();
     courseShow();
+    collapseButton();
 };
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
