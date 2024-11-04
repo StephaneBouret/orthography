@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Courses;
 use App\Entity\Invitation;
+use App\Entity\Navigation;
 use App\Entity\NewsLetter;
 use App\Entity\Program;
 use App\Entity\Sections;
@@ -39,6 +40,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Cours', 'fas fa-book-open', Courses::class);
         yield MenuItem::linkToCrud('Invitations', 'fas fa-envelope', Invitation::class);
+        yield MenuItem::linkToCrud('Navigation', 'fa-solid fa-route', Navigation::class);
         yield MenuItem::linkToCrud('Newsletter', 'fa-solid fa-envelope-open-text', NewsLetter::class);
         yield MenuItem::linkToCrud('Sections', 'fa-fw fas fa-section', Sections::class);
         yield MenuItem::linkToCrud('Programmes', 'fas fa-list-check', Program::class);

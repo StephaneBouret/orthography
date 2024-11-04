@@ -59,7 +59,7 @@
 	<div id="lesson-navigation">
 		<nav
 			class="btn-row justify-content-end">
-			{# {% include "partials/_navigation.html.twig" %} #}
+			{% include "partials/_navigation.html.twig" %}
 			<div id="completion-button" data-controller="toast">
 				{{ form_start(form, {'action': path('app_course_confirmation', {'id': course.id})}) }}
 				{% if lesson is empty %}

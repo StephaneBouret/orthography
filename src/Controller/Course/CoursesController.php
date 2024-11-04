@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ButtonFormType;
 use App\Repository\LessonRepository;
 use App\Repository\CoursesRepository;
+use App\Repository\NavigationRepository;
 use App\Repository\SectionsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -59,7 +60,7 @@ class CoursesController extends AbstractController
 
     #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas le droit d\'accéder à cette page')]
     #[Route('/courses/{program_slug}/{section_slug}/{slug}', name: 'courses_show', priority: -1)]
-    public function show($slug, LessonRepository $lessonRepository, Request $request, UploaderHelper $uploaderHelper): Response
+    public function show($slug, LessonRepository $lessonRepository, Request $request, UploaderHelper $uploaderHelper, NavigationRepository $navigationRepository): Response
     {
         $currentUrl = $request->getUri();
         $response = new Response();
@@ -72,6 +73,8 @@ class CoursesController extends AbstractController
         $course = $this->coursesRepository->findOneBy([
             'slug' => $slug
         ]);
+
+        $navigation = $navigationRepository->findAll();
         
         $filePath = $uploaderHelper->asset($course, 'partialFile');
         $content = null;
@@ -107,6 +110,7 @@ class CoursesController extends AbstractController
             'nbrLessonsDone' => $nbrLessonsDone,
             'lessons' => $lessonRepository->findBy(['user' => $user->getId()]),
             'fileContent' => $content,
+            'navigation' => $navigation,
         ], $response);
     }
 }
