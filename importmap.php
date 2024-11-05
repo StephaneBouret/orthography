@@ -59,4 +59,17 @@ return [
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
+    'aos' => [
+        'version' => '3.0.0-beta.6',
+    ],
+    'lodash.throttle' => [
+        'version' => '4.1.1',
+    ],
+    'lodash.debounce' => [
+        'version' => '4.0.8',
+    ],
+    'aos/dist/aos.css' => [
+        'version' => '2.3.4',
+        'type' => 'css',
+    ],
 ];

@@ -3,6 +3,7 @@ import {
     Application
 } from "@hotwired/stimulus";
 import ToastController from "./controllers/toast_controller.js";
+import AOS from "aos";
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -13,6 +14,7 @@ import './styles/app.css';
 import './styles/courses.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import 'aos/dist/aos.css';
 import 'bootstrap';
 
 window.Stimulus = Application.start();
@@ -111,12 +113,50 @@ const collapseButton = () => {
     });
 }
 
+const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.fade-up');
+
+    elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const inViewport = rect.top <= (window.innerHeight || document.documentElement.clientHeight);
+
+        if (inViewport) {
+            el.classList.add('visible');
+        } else {
+            el.classList.remove('visible');
+        }
+    });
+};
+
+const initAnimations = () => {
+    // Applique l'animation sur tous les éléments au chargement
+    animateOnScroll();
+
+    // Réapplique l'animation lors du défilement
+    document.addEventListener('scroll', animateOnScroll, {
+        passive: true
+    });
+    window.addEventListener('resize', animateOnScroll, {
+        passive: true
+    });
+};
+
 const initPage = () => {
+    console.log("Initialisation de la page et d'AOS");
     closeAlertMessage();
     backToTop();
     initToggle();
     courseShow();
     collapseButton();
+    initAnimations();
+    AOS.init({
+        duration: 1200,
+        once: true,
+        disableMutationObserver: true,
+        mirror: true
+    });
+
+    AOS.refresh();
 };
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

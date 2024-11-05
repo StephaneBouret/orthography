@@ -51,14 +51,18 @@
 			{{ fileContent|raw }}
 		</div>
 	{% endif %}
+	{% if course.contentType == constant('App\\Entity\\Courses::TYPE_LINK') %}
+		<div id="lesson-content">
+			{{ fileContent|raw }}
+		</div>
+	{% endif %}
 	<div class="spacer-section"></div>
 	<div class="text-longform" data-controller="richtext">
 		<div>{{ course.shortDescription | raw | nl2br }}</div>
 	</div>
 	<div class="spacer-section"></div>
 	<div id="lesson-navigation">
-		<nav
-			class="btn-row justify-content-end">
+		<nav class="btn-row justify-content-end">
 			{% include "partials/_navigation.html.twig" %}
 			<div id="completion-button" data-controller="toast">
 				{{ form_start(form, {'action': path('app_course_confirmation', {'id': course.id})}) }}

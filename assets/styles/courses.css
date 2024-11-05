@@ -767,3 +767,141 @@ nav .breadcrumb .breadcrumb-item a:hover {
 .icon.closed.f4lgy4.collapsed svg {
     fill: #06040E !important;
 }
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.h4ktbg {
+    background-color: #EDEDED !important;
+    border: 1px solid #D6D6D7 !important;
+    border-radius: 0.5rem !important;
+    padding: 16px;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    overflow: auto;
+}
+
+.te2ecj {
+    margin-bottom: 0.563rem !important;
+}
+
+.carefull {
+    color: #d73a49;
+    font-weight: bold;
+}
+
+.blue {
+    color: #1877f2;
+    font-weight: 600;
+}
+
+.green {
+    color: #18B870;
+}
+
+.d1fo5x {
+    color: #8b6f48;
+    font-weight: bold;
+}
+
+.brown_u {
+    color: #66352B;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.thinksfull {
+    color: #863339;
+    font-weight: bold;
+}
+
+table.statement {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+    background-color: transparent;
+    border-spacing: 0;
+}
+
+table.statement tr {
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+table.statement th,
+table.statement td {
+    padding: .625em;
+    text-align: center;
+    border: 1px solid #ccc;
+    font-size: 0.9em;
+}
+
+table.statement th {
+    font-size: 0.9em;
+    letter-spacing: .1em;
+    border: 1px solid #ccc;
+}
+
+@media all and (max-width: 600px) {
+    table.statement {
+        border: 0;
+    }
+
+    table.statement thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table.statement tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    table.statement td {
+        border: 0;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    table.statement td.premierchamp {
+        display: none;
+    }
+
+    table.statement td.secondchamp {
+        display: none;
+    }
+
+    table.statement td.troisiemechamp {
+        display: none;
+    }
+
+    table.statement td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    table.statement td:last-child {
+        border-bottom: 0;
+    }
+}

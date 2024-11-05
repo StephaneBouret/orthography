@@ -63,6 +63,10 @@ class CoursesCrudController extends AbstractCrudController
                 ->autocomplete(),
             TextField::new('partialFile', 'Fichier :')
                 ->setFormType(VichFileType::class)
+                ->setFormTypeOption('download_label', function ($object) {
+                    return $object->getPartialFileName(); // méthode pour récupérer le nom du fichier
+                })
+                ->setFormTypeOption('delete_label', 'Supprimer le fichier')
                 ->setTranslationParameters(['form.label.delete' => 'Supprimer le fichier'])
                 ->hideOnIndex(),
             TextField::new('partialFileName', 'Fichier')
