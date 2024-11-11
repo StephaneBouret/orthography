@@ -106,9 +106,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\OneToMany(targetEntity: Lesson::class, mappedBy: 'user')]
     private Collection $lessons;
 
+    /**
+     * @var Collection<int, QuizResult>
+     */
+    #[ORM\OneToMany(targetEntity: QuizResult::class, mappedBy: 'user')]
+    private Collection $quizResults;
+
     public function __construct()
     {
         $this->lessons = new ArrayCollection();
+        $this->quizResults = new ArrayCollection();
     }
 
     public function __toString()
@@ -379,6 +386,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
             // set the owning side to null (unless already changed)
             if ($lesson->getUser() === $this) {
                 $lesson->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuizResult>
+     */
+    public function getQuizResults(): Collection
+    {
+        return $this->quizResults;
+    }
+
+    public function addQuizResult(QuizResult $quizResult): static
+    {
+        if (!$this->quizResults->contains($quizResult)) {
+            $this->quizResults->add($quizResult);
+            $quizResult->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizResult(QuizResult $quizResult): static
+    {
+        if ($this->quizResults->removeElement($quizResult)) {
+            // set the owning side to null (unless already changed)
+            if ($quizResult->getUser() === $this) {
+                $quizResult->setUser(null);
             }
         }
 

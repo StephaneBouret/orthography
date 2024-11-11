@@ -22,6 +22,14 @@ class NavigationRepository extends ServiceEntityRepository
         $this->getEntityManager()->getConnection()->executeStatement("TRUNCATE TABLE $tableName");
     }
 
+    public function findAllNames(): array
+    {
+        return $this->createQueryBuilder('n')
+            ->select('n.path')
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
     //    /**
     //     * @return Navigation[] Returns an array of Navigation objects
     //     */

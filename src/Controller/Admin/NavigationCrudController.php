@@ -28,11 +28,20 @@ class NavigationCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        $coursesNames = $this->coursesRepository->findAllNames();
+        $navigationNames = $this->navigationRepository->findAllNames();
+
+        // Extraire le dernier segment de chaque URL de navigation
+        $navigationSlugs = array_map(fn($name) => basename($name), $navigationNames);
+
+        // Vérifier la correspondance entre les noms des cours et les slugs extraits de navigation
+        $namesMatch = empty(array_diff($coursesNames, $navigationSlugs));
+
         $createNavigation = Action::new('createNavigation', 'Créer la navigation')
             ->linkToCrudAction('createNavigation')
             ->addCssClass('btn btn-info')
             ->displayIf(fn() => $this->navigationRepository->count([]) === 0
-                || $this->navigationRepository->count([]) > $this->coursesRepository->count([]))
+                || ($this->navigationRepository->count([]) < $this->coursesRepository->count([])) || !$namesMatch)
             ->createAsGlobalAction();
 
         $actions = parent::configureActions($actions);

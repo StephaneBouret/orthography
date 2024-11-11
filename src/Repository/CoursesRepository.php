@@ -67,6 +67,14 @@ class CoursesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllNames(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.slug')
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
     //    /**
     //     * @return Courses[] Returns an array of Courses objects
     //     */

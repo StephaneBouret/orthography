@@ -2,11 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Answer;
 use App\Entity\Courses;
 use App\Entity\Invitation;
 use App\Entity\Navigation;
 use App\Entity\NewsLetter;
 use App\Entity\Program;
+use App\Entity\Question;
 use App\Entity\Sections;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +44,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Invitations', 'fas fa-envelope', Invitation::class);
         yield MenuItem::linkToCrud('Navigation', 'fa-solid fa-route', Navigation::class);
         yield MenuItem::linkToCrud('Newsletter', 'fa-solid fa-envelope-open-text', NewsLetter::class);
+        yield MenuItem::linkToCrud('Questions', 'fa-regular fa-circle-question', Question::class);
+        yield MenuItem::linkToCrud('Réponses', 'fa-regular fa-comment', Answer::class);
         yield MenuItem::linkToCrud('Sections', 'fa-fw fas fa-section', Sections::class);
         yield MenuItem::linkToCrud('Programmes', 'fas fa-list-check', Program::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);

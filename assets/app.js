@@ -141,6 +141,190 @@ const initAnimations = () => {
     });
 };
 
+// Fonction de soumission des réponses de quiz
+const submitQuizAnswers = () => {
+    const submitButton = document.getElementById('submit-quiz-button'); // Bouton "Soumettre la réponse"
+    const nextButton = document.getElementById('next-question-button'); // Bouton "Prochaine question"
+    const viewResultsButton = document.getElementById('view-results-button'); // Bouton "Voir les résultats"
+    const sectionElement = document.getElementById('quiz-section-id');
+    const sectionId = sectionElement ? sectionElement.dataset.sectionId : null;
+    let currentQuestionIndex = 0;
+
+    // Sélectionner toutes les questions
+    const questions = document.querySelectorAll('.question');
+
+    if (!submitButton && !nextButton && !viewResultsButton && !sectionElement) {
+        return;
+    }
+
+    // Afficher la question à l'index donné
+    function showQuestion(index) {
+        questions.forEach((question, i) => {
+            question.classList.toggle('d-none', i !== index); // Afficher uniquement la question active
+        });
+
+        // Réinitialiser les boutons
+        submitButton.classList.add('disabled');
+        submitButton.disabled = true;
+        nextButton.classList.add('d-none');
+        viewResultsButton.classList.add('d-none');
+
+        // Si c'est la dernière question
+        if (index === questions.length - 1) {
+            // Afficher le bouton "Voir les résultats" et cacher le bouton "Soumettre"
+            submitButton.classList.add('d-none');
+        } else {
+            // Afficher le bouton "Soumettre" et cacher "Voir les résultats"
+            submitButton.classList.remove('d-none');
+            viewResultsButton.classList.add('d-none');
+        }
+    }
+
+    // Gérer la sélection des réponses
+    function handleAnswerSelection(event) {
+        const selectedAnswer = event.target;
+
+        // Appliquer la classe 'selected' pour marquer visuellement la réponse choisie
+        document.querySelectorAll(`input[name="${selectedAnswer.name}"]`).forEach(input => {
+            input.parentElement.classList.remove('selected');
+        });
+        selectedAnswer.parentElement.classList.add('selected');
+
+        // Activer le bouton "Soumettre"
+        submitButton.classList.remove('disabled');
+        submitButton.disabled = false;
+    }
+
+    function handleViewResults() {
+        // Collecter les réponses de chaque question
+        const answers = Array.from(document.querySelectorAll('.question')).map(question => {
+            const questionId = question.dataset.questionId;
+            const selectedAnswer = question.querySelector('input[type="radio"]:checked');
+            return {
+                questionId: questionId,
+                answerId: selectedAnswer ? selectedAnswer.value : null
+            };
+        });
+    
+        // Envoi de toutes les réponses au serveur pour les enregistrer
+        fetch("/quiz/finalize", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('input[name="_csrf_token"]').value
+            },
+            body: JSON.stringify({ 
+                sectionId: sectionId,
+                answers: answers 
+            })
+        })
+        .then(response => response.json())
+        .then(data => {           
+            if (data.redirectUrl) {
+                window.location.href = data.redirectUrl; // Rediriger vers la page de résultats
+            } else {
+                console.error("Erreur lors de l'enregistrement des résultats:", data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors de la finalisation du quiz:', error);
+        });
+    }
+
+    // Soumettre la réponse et vérifier la validité
+    function handleSubmit() {
+        const currentQuestion = questions[currentQuestionIndex];
+        const selectedAnswer = currentQuestion.querySelector('input[type="radio"]:checked');
+
+        if (!selectedAnswer) {
+            alert('Veuillez sélectionner une réponse.');
+            return;
+        }
+
+        // Envoie de la réponse au serveur via AJAX
+        fetch("/quiz/submit", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_csrf_token"]').value
+                },
+                body: JSON.stringify({
+                    questionId: currentQuestion.dataset.questionId,
+                    answerId: selectedAnswer.value
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Réponse du serveur:', data);
+
+                // Appliquer la classe 'correct' ou 'incorrect' selon la validité de la réponse
+                const feedbackClass = data.correct ? 'correct' : 'incorrect';
+                selectedAnswer.parentElement.classList.add(feedbackClass);
+
+                // Afficher l'explication de la question
+                const explanation = currentQuestion.querySelector('.explanation');
+                if (explanation) {
+                    explanation.classList.remove('d-none');
+                }
+
+                if (currentQuestionIndex < questions.length - 1) {
+                    nextButton.classList.remove('d-none');
+                    submitButton.classList.add('d-none');
+                } else {
+                    submitButton.classList.add('d-none');
+                    viewResultsButton.classList.remove('d-none');
+                    // setTimeout(() => {
+                    //     submitButton.classList.add('d-none');
+                    //     viewResultsButton.classList.remove('d-none');
+                    // }, 500);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la soumission de la réponse:', error);
+            });
+    }
+
+    // Gérer le clic sur le bouton "Prochaine question"
+    function handleNextQuestion() {
+        // Passer à la question suivante
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex === 1) { // Lorsqu'on quitte la première question
+            const navigationPartial = document.getElementById('navigation-partial');
+            if (navigationPartial) {
+                navigationPartial.classList.add('d-none'); // Masquer la navigation
+            }
+        }
+
+        if (currentQuestionIndex < questions.length) {
+            showQuestion(currentQuestionIndex);
+
+            // Réinitialiser l'état des boutons pour la question suivante
+            submitButton.classList.remove('d-none');
+            nextButton.classList.add('d-none');
+        } else {
+            // Fin du quiz : afficher les résultats
+            handleViewResults();
+        }
+    }
+
+    // Attacher les écouteurs d'événements pour les réponses
+    document.querySelectorAll('input[type="radio"]').forEach(input => {
+        input.addEventListener('change', handleAnswerSelection);
+    });
+
+    // Attacher l'événement de soumission du quiz
+    submitButton.addEventListener('click', handleSubmit);
+
+    // Attacher l'événement de passage à la question suivante
+    nextButton.addEventListener('click', handleNextQuestion);
+
+    viewResultsButton.addEventListener('click', handleViewResults);
+
+    // Afficher la première question
+    showQuestion(currentQuestionIndex);
+};
+
 const initPage = () => {
     console.log("Initialisation de la page et d'AOS");
     closeAlertMessage();
@@ -149,6 +333,7 @@ const initPage = () => {
     courseShow();
     collapseButton();
     initAnimations();
+    submitQuizAnswers();
     AOS.init({
         duration: 1200,
         once: true,
