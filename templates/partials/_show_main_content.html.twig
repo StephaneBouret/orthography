@@ -63,13 +63,16 @@
 				{% include "partials/quiz/_show.html.twig" %}
 			{% endif %}
 		{% endif %}
+		{% if course.contentType == constant('App\\Entity\\Courses::TYPE_AUDIO') %}
+			{{ include('partials/_dictation.html.twig', { form: form, errors: errors }) }}
+		{% endif %}
 	</div>
 	<div class="spacer-section"></div>
 	<div class="text-longform" data-controller="richtext">
 		<div>{{ course.shortDescription | raw | nl2br }}</div>
 	</div>
 	<div class="spacer-section"></div>
-	{% if (course.contentType == constant('App\\Entity\\Courses::TYPE_TWIG')) or (course.contentType == constant('App\\Entity\\Courses::TYPE_LINK')) %}
+	{% if (course.contentType == constant('App\\Entity\\Courses::TYPE_TWIG')) or (course.contentType == constant('App\\Entity\\Courses::TYPE_LINK')) or (course.contentType == constant('App\\Entity\\Courses::TYPE_AUDIO')) %}
 		<div id="lesson-navigation">
 			<nav class="btn-row justify-content-end">
 				{% include "partials/_navigation.html.twig" %}

@@ -5,6 +5,7 @@ namespace App\Controller\Course;
 use App\Entity\User;
 use App\Form\ButtonFormType;
 use App\Service\QuizService;
+use App\Service\DictationService;
 use App\Service\UrlCookieService;
 use App\Service\CourseFileService;
 use App\Service\QuizResultService;
@@ -65,7 +66,7 @@ class CoursesController extends AbstractController
 
     #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas le droit d\'accéder à cette page')]
     #[Route('/courses/{program_slug}/{section_slug}/{slug}', name: 'courses_show', priority: -1)]
-    public function show($slug, $section_slug, Request $request, NavigationRepository $navigationRepository, QuizService $quizService, QuizResultService $quizResultService, CourseFileService $courseFileService): Response
+    public function show($slug, $section_slug, Request $request, NavigationRepository $navigationRepository, QuizService $quizService, QuizResultService $quizResultService, CourseFileService $courseFileService, DictationService $dictationService): Response
     {
         $currentUrl = $request->getUri();
         $response = new Response();
@@ -118,6 +119,11 @@ class CoursesController extends AbstractController
 
         $form = $this->createForm(ButtonFormType::class);
 
+        $dictationData = $dictationService->createAndHandleDictationForm($course, $request);
+        $formDictation = $dictationData['form'];
+        $errors = $dictationData['errors'];
+        $successMessage = $dictationData['successMessage'];
+
         return $this->render('courses/show.html.twig', [
             'course' => $course,
             'sections' => $sections,
@@ -134,6 +140,9 @@ class CoursesController extends AbstractController
             'section' => $section,
             'quizResults' => $quizAttemptResults['quizResults'],
             'totalQuestions' => $quizAttemptResults['totalQuestions'],
+            'formDictation' => $formDictation,
+            'errors' => $errors,
+            'successMessage' => $successMessage
         ], $response);
     }
 }

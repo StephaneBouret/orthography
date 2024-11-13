@@ -39,6 +39,12 @@ class Courses
     #[ORM\Column(nullable: true)]
     private ?string $partialFileName = null;
 
+    #[Vich\UploadableField(mapping: 'audios_files', fileNameProperty: 'audioFileName')]
+    private ?File $audioFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $audioFileName = null;
+
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -60,6 +66,9 @@ class Courses
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $shortDescription = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $correctionText = null;
 
     public function __construct()
     {
@@ -183,6 +192,40 @@ class Courses
         return $this->partialFileName;
     }
 
+        /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $partialFile
+     */
+    public function setAudioFile(?File $audioFile = null): void
+    {
+        $this->audioFile = $audioFile;
+        if (null !== $audioFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getAudioFile(): ?File
+    {
+        return $this->audioFile;
+    }
+
+    public function setAudioFileName(?string $audioFileName): void
+    {
+        $this->audioFileName = $audioFileName;
+    }
+
+    public function getAudioFileName(): ?string
+    {
+        return $this->audioFileName;
+    }
+
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
@@ -208,6 +251,18 @@ class Courses
     public function setShortDescription(?string $shortDescription): static
     {
         $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getCorrectionText(): ?string
+    {
+        return $this->correctionText;
+    }
+
+    public function setCorrectionText(?string $correctionText): static
+    {
+        $this->correctionText = $correctionText;
 
         return $this;
     }

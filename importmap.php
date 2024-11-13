@@ -36,6 +36,10 @@ return [
         'path' => './assets/js/location.js',
         'entrypoint' => true,
     ],
+    'admin_custom' => [
+        'path' => './assets/js/admin_custom.js',
+        'entrypoint' => true,
+    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],

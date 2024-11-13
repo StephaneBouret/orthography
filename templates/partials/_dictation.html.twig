@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-between flex-wrap">
+	<figure>
+		<figcaption class="mb-2">
+		<img src="{{ asset('img/keycap-digit-one.png') }}" class="biv8j1"> Écouter l'intégralité de la dictée</figcaption>
+		<audio controls src="{{ vich_uploader_asset(course, 'partialFile') }}"></audio>
+	</figure>
+
+	{% if course.audioFileName %}
+		<figure>
+			<figcaption class="mb-2">
+			<img src="{{ asset('img/keycap-digit-two.png') }}" class="biv8j1"> Démarrer la dictée</figcaption>
+			<audio controls src="{{ vich_uploader_asset(course, 'audioFile') }}"></audio>
+		</figure>
+	{% endif %}
+</div>
+
+{{ form_start(formDictation, { 'attr': { 'data-turbo': 'false' } }) }}
+{{ form_row(formDictation.dictationText) }}
+<button type="submit" class="btn btn-md btn-dark btn-icon ">Vérifier les fautes</button>
+{{ form_end(formDictation) }}
+
+{% if successMessage is not empty %}
+	<div class="alert alert-success mt-3">
+		{{ successMessage }}
+	</div>
+{% endif %}
+
+{% if errors is not empty %}
+	<div class="sidebar-error-results mt-3">
+		Nombre d'erreurs :
+		<span class="bold">{{ errors|length }}</span>
+		<ul>
+			{% for error in errors %}
+				<li>
+					Vous avez écrit :
+					<span class="bold">"{{ error.userWord }}"</span>
+					à la
+					<span class="bold">{{ error.sentence }}e phrase</span>, le mot attendu est :
+					<span class="bold">"{{ error.expectedWord }}"</span>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<button class="btn btn-secondary mt-3" id="showCorrection">Voir la correction</button>
+	<div id="correctionText" class="h4ktbg mt-3" style="display: none;">
+		{{ course.correctionText|nl2br }}
+	</div>
+{% endif %}

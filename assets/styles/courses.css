@@ -1387,3 +1387,20 @@ trix-toolbar [data-toggle=popover][aria-expanded=true] select.dropdown-item.trix
     background-color: #d4d4d4 !important;
     border-color: #d4d4d4 !important;
 }
+
+/*--------------------------------------------------------------
+# Dictation Section
+--------------------------------------------------------------*/
+.sidebar-error-results {
+    background-color: #f9c5c5;
+    padding: 15px 6px;
+    border-radius: 5px;
+}
+
+.biv8j1 {
+    -o-object-fit: cover;
+    object-fit: cover;
+    min-width: 1.75rem;
+    width: 1.75rem;
+    height: 1.75rem;
+}

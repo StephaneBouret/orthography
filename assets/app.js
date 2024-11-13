@@ -325,6 +325,12 @@ const submitQuizAnswers = () => {
     showQuestion(currentQuestionIndex);
 };
 
+const showCorrectionText = () => {
+    document.getElementById('correctionText').style.display = 'block';
+};
+
+const showCorrection = document.getElementById('showCorrection');
+
 const initPage = () => {
     console.log("Initialisation de la page et d'AOS");
     closeAlertMessage();
@@ -334,6 +340,10 @@ const initPage = () => {
     collapseButton();
     initAnimations();
     submitQuizAnswers();
+    if (showCorrection) {
+        showCorrection.addEventListener('click', showCorrectionText);
+    }
+
     AOS.init({
         duration: 1200,
         once: true,
