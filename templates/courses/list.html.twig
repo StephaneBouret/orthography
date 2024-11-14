@@ -30,7 +30,7 @@
 											{% if app.request.cookies.get('url_visited') %}
 												{% set url = app.request.cookies.get('url_visited') %}
 											{% else %}
-												{% set url = app.request.schemeAndHttpHost ~ '/courses/formation-en-orthographe/a-propos-de-cette-formation-10-minutes' %}
+												{% set url = app.request.schemeAndHttpHost ~ '/courses/formation-en-orthographe/a-propos-de-cette-formation' %}
 											{% endif %}
 											<article class="mb-6 d-flex align-items-center">
 												{% if nbrLessonsDone == nbrCourses %}
