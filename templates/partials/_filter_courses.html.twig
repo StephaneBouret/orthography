@@ -1,0 +1,25 @@
+{{ form_start(form, {'attr': {'class': 'filter js-filter-courses-form'}}) }}
+<div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+	<span class="visually-hidden">Loading...</span>
+</div>
+{{ form_row(form.q) }}
+<div class="ps-1">
+	<div class="d-flex align-items-center justify-content-end">
+		<button type="submit" class="btn btn-link btn-sm" id="resetBtn">Tout effacer</button>
+	</div>
+</div>
+<div class="box border-top border-bottom ps-1">
+	<div class="box-label text-uppercase d-flex align-items-center">
+		Sections
+		<button class="btn ms-auto" type="button" data-bs-toggle="collapse" href="#collapseSections" aria-expanded="false" aria-controls="collapseSections">
+			<span class="fas fa-plus"></span>
+		</button>
+	</div>
+	<div class="collapse show mt-2 ps-2" id="collapseSections">
+		{{ form_row(form.sections) }}
+	</div>
+</div>
+<div class="box border-bottom">
+	<button class="btn btn-outline-dark w-100">Filtrer</button>
+</div>
+{{ form_end(form) }}

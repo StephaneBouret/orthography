@@ -2,19 +2,29 @@
 
 namespace App\Repository;
 
+use App\Data\SearchCourseData;
 use App\Entity\Courses;
 use App\Entity\Sections;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Courses>
  */
 class CoursesRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    /**
+     * @var PaginatorInterface
+     */
+    protected $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Courses::class);
+        $this->paginator = $paginator;
     }
 
     public function save(Courses $entity, bool $flush = false): void
@@ -74,6 +84,52 @@ class CoursesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleColumnResult();
     }
+
+    /**
+     * Récupère les cours en lien avec une recherche
+     *
+     * @param PaginationInterface
+     */
+    public function findSearch(SearchCourseData $search): PaginationInterface
+    {
+        $query = $this->getSearchQuery($search)->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            6
+        );
+    }
+
+    private function getSearchQuery(SearchCourseData $search): QueryBuilder
+    {
+        $query = $this
+            ->createQueryBuilder('c')
+            ->select('c', 's')
+            ->join('c.section', 's');
+
+        if (!empty($search->q)) {
+            $query = $query
+                ->andWhere('c.name LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }
+
+        if (!empty($search->sections)) {
+            $query = $query
+                ->andWhere('s.id IN (:sections)')
+                ->setParameter('sections', $search->sections);
+        }
+
+        $query->orderBy('c.id', 'ASC');
+
+        return $query;
+    }
+
+    public function countItems(SearchCourseData $search): int
+    {
+        $query = $this->getSearchQuery($search)->getQuery();
+        return count($query->getResult());
+    }
+
 
     //    /**
     //     * @return Courses[] Returns an array of Courses objects

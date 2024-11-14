@@ -1,0 +1,8 @@
+{% for c in courses %}
+	<div class="fuwpn3" id="course-{{ c.id }}">
+		<div class="content">
+			<h2 class="title">{{ c.name }}</h2>
+            <a href="{{ path('courses_show', {'program_slug': c.program.slug, 'section_slug': c.section.slug, 'slug': c.slug}) }}" class="button">Détails</a>
+		</div>
+	</div>
+{% endfor %}
