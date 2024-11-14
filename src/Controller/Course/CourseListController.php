@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CourseListController extends AbstractController
 {
@@ -47,6 +48,13 @@ class CourseListController extends AbstractController
         $form->handleRequest($request);
         $courses = $coursesRepository->findSearch($data);
         $totalItems = $coursesRepository->countItems($data);
+
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('courses/_courses.html.twig', ['courses' => $courses]),
+                'pagination' => $this->renderView('courses/_pagination.html.twig', ['courses' => $courses]),
+            ]);
+        }
 
         return $this->render('courses/display.html.twig', [
             'form' => $form,

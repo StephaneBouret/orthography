@@ -76,4 +76,10 @@ return [
         'version' => '2.3.4',
         'type' => 'css',
     ],
+    'flip-toolkit' => [
+        'version' => '7.2.6',
+    ],
+    'rematrix' => [
+        'version' => '0.2.2',
+    ],
 ];

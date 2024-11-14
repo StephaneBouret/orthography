@@ -1594,3 +1594,35 @@ trix-toolbar [data-toggle=popover][aria-expanded=true] select.dropdown-item.trix
     background-color: #212529;
     border-color: #212529;
 }
+
+/*--------------------------------------------------------------
+# Filters
+--------------------------------------------------------------*/
+.filter {
+    display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+  }
+  
+  /*--------------------------------------------------------------
+  # Spinner
+  --------------------------------------------------------------*/
+  .is-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #FFF;
+    opacity: 0.5;
+    z-index: 4;
+  }
+  
+  .is-loading .spinner-border {
+    position: absolute;
+    top: calc(50% - 1rem);
+    left: calc(50% - 1rem);
+    z-index: 5;
+  }

@@ -4,6 +4,7 @@ import {
 } from "@hotwired/stimulus";
 import ToastController from "./controllers/toast_controller.js";
 import AOS from "aos";
+import FilterCourses from './js/modules/FilterCourses.js'
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -19,6 +20,8 @@ import 'bootstrap';
 
 window.Stimulus = Application.start();
 Stimulus.register("toast", ToastController);
+
+new FilterCourses(document.querySelector('.js-filter-courses'));
 
 // Easy selector helper function
 const select = (el, all = false) => {
