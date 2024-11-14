@@ -4,7 +4,6 @@ import { Flipper, spring } from 'flip-toolkit'
  * @property {HTMLElement} pagination
  * @property {HTMLElement} content
  * @property {HTMLFormElement} form
- * @property {HTMLElement} reset
  */
 export default class FilterCourses {
     /**
@@ -17,7 +16,6 @@ export default class FilterCourses {
         this.pagination = element.querySelector('.js-filter-courses-pagination')
         this.content = element.querySelector('.js-filter-courses-content')
         this.form = element.querySelector('.js-filter-courses-form')
-        this.reset = element.querySelector('#resetBtn')
         this.bindEvents()
     }
 
@@ -33,7 +31,6 @@ export default class FilterCourses {
             input.addEventListener('change', this.loadForm.bind(this))
         })
         this.form.querySelector('#q').addEventListener('keyup', this.loadForm.bind(this))
-        this.reset.addEventListener('click', this.resetForm.bind(this))
     }
 
     async loadForm() {
@@ -67,13 +64,6 @@ export default class FilterCourses {
             console.error(response)
         }
         this.hideLoader()
-    }
-
-    resetForm() {
-        // Reset the form elements
-        this.form.reset();
-        // After resetting the form, trigger the form submission to update the content
-        this.loadForm();
     }
 
     showLoader() {
