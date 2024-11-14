@@ -40,7 +40,7 @@ class CourseListController extends AbstractController
 
     #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas le droit d\'accéder à cette page')]
     #[Route('/courses/search', name: 'courses_search')]
-    public function display(Request $request, CoursesRepository $coursesRepository, SectionsRepository $sectionsRepository)
+    public function display(Request $request, CoursesRepository $coursesRepository)
     {
         $data = new SearchCourseData;
         $data->page = $request->get('page', 1);
@@ -50,9 +50,11 @@ class CourseListController extends AbstractController
         $totalItems = $coursesRepository->countItems($data);
 
         if ($request->get('ajax')) {
+            $totalItems = $coursesRepository->countItems($data);
             return new JsonResponse([
                 'content' => $this->renderView('courses/_courses.html.twig', ['courses' => $courses]),
                 'pagination' => $this->renderView('courses/_pagination.html.twig', ['courses' => $courses]),
+                'totalItems' => $totalItems,
             ]);
         }
 

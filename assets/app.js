@@ -21,8 +21,6 @@ import 'bootstrap';
 window.Stimulus = Application.start();
 Stimulus.register("toast", ToastController);
 
-new FilterCourses(document.querySelector('.js-filter-courses'));
-
 // Easy selector helper function
 const select = (el, all = false) => {
     el = el.trim()
@@ -343,6 +341,7 @@ const initPage = () => {
     collapseButton();
     initAnimations();
     submitQuizAnswers();
+    new FilterCourses(document.querySelector('.js-filter-courses'));
     if (showCorrection) {
         showCorrection.addEventListener('click', showCorrectionText);
     }

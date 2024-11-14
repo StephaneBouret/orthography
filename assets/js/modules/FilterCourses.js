@@ -58,6 +58,10 @@ export default class FilterCourses {
             // this.content.innerHTML = data.content
             this.pagination.innerHTML = data.pagination
             // params contient l'url
+            const totalItemsElement = document.getElementById('totalItems');
+            if (totalItemsElement) {
+                totalItemsElement.innerHTML = `${data.totalItems} ${data.totalItems > 1 ? 'Résultats' : 'Résultat'}`;
+            }
             params.delete('ajax') // On ne veut pas que le paramètre "ajax" se retrouve dans l'URL
             history.replaceState({}, '', url.split('?')[0] + '?' + params.toString())
         } else {
