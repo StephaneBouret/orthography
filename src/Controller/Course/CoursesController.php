@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Form\ButtonFormType;
 use App\Service\QuizService;
 use App\Service\DictationService;
-use App\Service\UrlCookieService;
 use App\Service\CourseFileService;
 use App\Service\QuizResultService;
 use App\Repository\LessonRepository;
