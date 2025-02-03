@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Question;
+use App\Entity\Sections;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,10 +17,12 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    public function countAll(): int
+    public function countAllBySection(Sections $section): int
     {
         $result = $this->createQueryBuilder('q')
             ->select('count(q.id)')
+            ->where('q.section = :section')
+            ->setParameter('section', $section)
             ->getQuery()
             ->getSingleScalarResult();
 

@@ -32,6 +32,25 @@ class QuizResultRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Récupère tous les résultats de quiz d'un utilisateur par section.
+     *
+     * @param [type] $user
+     * @param [type] $section
+     * @return QuizResult[] Un tableau d'objets QuizResult
+     */
+    public function findByUserAndSection($user, $section): array
+    {
+        return $this->createQueryBuilder('qr')
+            ->andWhere('qr.user = :user')
+            ->andWhere('qr.section = :section')
+            ->setParameter('user', $user)
+            ->setParameter('section', $section)
+            ->orderBy('qr.completedAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return QuizResult[] Returns an array of QuizResult objects
     //     */

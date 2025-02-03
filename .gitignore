@@ -30,3 +30,4 @@
 ###< liip/imagine-bundle ###
 
 /templates/uploads/
+/migrations/Version20250202184820.php

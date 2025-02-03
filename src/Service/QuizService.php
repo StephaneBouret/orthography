@@ -16,7 +16,7 @@ class QuizService
         $questions = $this->questionRepository->findBy(['section' => $section]);
 
         // Comptage des questions
-        $count = $this->questionRepository->countAll();
+        $count = $this->questionRepository->countAllBySection($section);
 
         // Génération du CSRF token
         $csrfToken = $this->csrfTokenManager->getToken('quiz_submission');

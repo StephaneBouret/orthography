@@ -12,11 +12,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class QuizResultService
 {
-    public function __construct(protected QuizResultRepository $quizResultRepository, protected EntityManagerInterface $em, protected SectionsRepository $sectionsRepository) {}
+    public function __construct(protected QuizResultRepository $quizResultRepository, protected EntityManagerInterface $em, protected SectionsRepository $sectionsRepository)
+    {
+    }
 
     public function getQuizAttemptResults(User $user, int $attemptId): array
     {
-        $quizResults = $this->quizResultRepository->findByUser($user);
+        // $quizResults = $this->quizResultRepository->findByUser($user);
 
         $quizResult = $this->quizResultRepository->find($attemptId);
 
@@ -24,8 +26,12 @@ class QuizResultService
             throw new NotFoundHttpException("La tentative de quiz n'existe pas.");
         }
 
-        $totalQuestions = count($quizResult->getSection()->getQuestions());
         $section = $quizResult->getSection();
+
+        // Récupération des résultats pour la section spécifique
+        $quizResults = $this->quizResultRepository->findByUserAndSection($user, $section);
+
+        $totalQuestions = count($quizResult->getSection()->getQuestions());
         $programSlug = $section->getProgram()->getSlug();
         $sectionSlug = $section->getSlug();
         $course = $section->getCourses()->last();
